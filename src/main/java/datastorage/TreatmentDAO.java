@@ -19,10 +19,10 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected String getCreateStatementString(Treatment treatment) {
-        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks, locked) VALUES " +
-                "(%d, '%s', '%s', '%s', '%s', '%s', '%b')", treatment.getPid(), treatment.getDate(),
+        return String.format("INSERT INTO treatment (pid, treatment_date, begin, end, description, remarks, locked, cid) VALUES " +
+                "(%d, '%s', '%s', '%s', '%s', '%s', '%b', '%d')", treatment.getPid(), treatment.getDate(),
                 treatment.getBegin(), treatment.getEnd(), treatment.getDescription(),
-                treatment.getRemarks(),treatment.isLocked());
+                treatment.getRemarks(),treatment.isLocked(),treatment.getCid());
     }
 
     @Override
@@ -35,7 +35,7 @@ public class TreatmentDAO extends DAOimp<Treatment> {
         LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
         LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
         LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
-        Treatment m = new Treatment(result.getLong(1), result.getLong(2),
+        Treatment m = new Treatment(result.getLong(1), result.getLong(2),result.getLong(9),
                 date, begin, end, result.getString(6), result.getString(7),
                 result.getBoolean(8));
         return m;
@@ -54,7 +54,7 @@ public class TreatmentDAO extends DAOimp<Treatment> {
             LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
             LocalTime begin = DateConverter.convertStringToLocalTime(result.getString(4));
             LocalTime end = DateConverter.convertStringToLocalTime(result.getString(5));
-            t = new Treatment(result.getLong(1), result.getLong(2),
+            t = new Treatment(result.getLong(1), result.getLong(2),result.getLong(9),
                     date, begin, end, result.getString(6), result.getString(7),
                     result.getBoolean(8));
             list.add(t);
@@ -65,8 +65,8 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     @Override
     protected String getUpdateStatementString(Treatment treatment) {
         return String.format("UPDATE treatment SET pid = %d, treatment_date ='%s', begin = '%s', end = '%s'," +
-                "description = '%s', remarks = '%s', locked = '%b' WHERE tid = %d", treatment.getPid(), treatment.getDate(),
-                treatment.getBegin(), treatment.getEnd(), treatment.getDescription(), treatment.getRemarks()
+                "description = '%s', remarks = '%s', cid = '%d', locked = '%b' WHERE tid = %d", treatment.getPid(), treatment.getDate(),
+                treatment.getBegin(), treatment.getEnd(), treatment.getDescription(), treatment.getRemarks(),treatment.getCid()
                 ,treatment.isLocked(),treatment.getTid());
     }
 

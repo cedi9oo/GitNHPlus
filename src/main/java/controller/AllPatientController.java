@@ -198,8 +198,9 @@ public class AllPatientController {
         LocalDate date = DateConverter.convertStringToLocalDate(birthday);
         String carelevel = this.txtCarelevel.getText();
         String room = this.txtRoom.getText();
+        LocalDate creationDate = LocalDate.now();
         try {
-            Patient p = new Patient(firstname, surname, date, carelevel, room);
+            Patient p = new Patient(firstname, surname, date, carelevel, room,creationDate);
             dao.create(p);
         } catch (SQLException e) {
             e.printStackTrace();

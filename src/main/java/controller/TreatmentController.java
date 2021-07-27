@@ -57,6 +57,7 @@ public class TreatmentController {
     public void initializeController(AllTreatmentController controller, Stage stage, Treatment treatment) {
         this.stage = stage;
         this.controller = controller;
+        createCaregiverComboBoxData();
         caregiverComboBox.setConverter(new StringConverter<Caregiver>() {
             @Override
             public String toString(Caregiver object) {
@@ -68,7 +69,7 @@ public class TreatmentController {
                 return null;
             }
         });
-        createCaregiverComboBoxData();
+
         caregiverComboBox.setItems(ComboBoxData);
         for (int x = 0; x<ComboBoxData.size();x++){
             if (ComboBoxData.get(x).getCid()==treatment.getCid()){

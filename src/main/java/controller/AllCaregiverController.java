@@ -16,6 +16,7 @@ import org.hsqldb.rights.User;
 import utils.UserCredentials;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class AllCaregiverController {
@@ -174,8 +175,9 @@ public class AllCaregiverController {
         String surname = this.txtSurname.getText();
         String firstname = this.txtFirstname.getText();
         String phonenumber = this.txtTelephone.getText();
+        LocalDate creationDate = LocalDate.now();
         try {
-            Caregiver c = new Caregiver(firstname, surname, phonenumber, false);
+            Caregiver c = new Caregiver(firstname, surname, phonenumber,creationDate, false);
             dao.create(c);
         } catch (SQLException e) {
             e.printStackTrace();

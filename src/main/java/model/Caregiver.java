@@ -10,19 +10,22 @@ public class Caregiver extends Person{
     private long cid;
     private String phonenumber;
     private List<Treatment> allTreatments = new ArrayList<Treatment>();
+    private LocalDate creationDate;
     private boolean locked;
 
-    public Caregiver(String firstName, String surname, String phonenumber,boolean locked) {
+    public Caregiver(String firstName, String surname, String phonenumber,LocalDate creationDate,boolean locked) {
         super(firstName, surname);
         this.phonenumber = phonenumber;
         this.locked = locked;
+        this.creationDate = creationDate;
     }
 
-    public Caregiver(long cid, String firstName, String surname, String phonenumber, boolean locked) {
+    public Caregiver(long cid, String firstName, String surname, String phonenumber,LocalDate creationDate, boolean locked) {
         super(firstName, surname);
         this.cid = cid;
         this.phonenumber = phonenumber;
         this.locked = locked;
+        this.creationDate =creationDate;
     }
 
     public long getCid() {
@@ -43,6 +46,14 @@ public class Caregiver extends Person{
         return false;
     }
 
+    public String getCreationDate(){
+        return creationDate.toString();
+    }
+
+    public void setCreationDate(String creationDate){
+        this.creationDate = DateConverter.convertStringToLocalDate(creationDate);
+    }
+
     public boolean isLocked() {
         return locked;
     }
@@ -57,6 +68,7 @@ public class Caregiver extends Person{
                 "\nFirstname: " + this.getFirstName() +
                 "\nSurname: " + this.getSurname() +
                 "\nPhonenumber: " + this.phonenumber +
+                "\nCreationDate: " + this.creationDate +
                 "\nLocked: " + this.locked +
                 "\n";
     }

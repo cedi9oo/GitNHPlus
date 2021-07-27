@@ -55,6 +55,7 @@ public class AllTreatmentController {
 
     public void initialize() {
         readAllAndShowInTableView();
+        createComboBoxData();
         comboBox.setItems(myComboBoxData);
         comboBox.getSelectionModel().select(0);
         this.main = main;
@@ -79,7 +80,7 @@ public class AllTreatmentController {
         this.colEnd.setCellValueFactory(new PropertyValueFactory<Treatment, String>("end"));
         this.colDescription.setCellValueFactory(new PropertyValueFactory<Treatment, String>("description"));
         this.tableView.setItems(this.tableviewContent);
-        createComboBoxData();
+
 
         if (!UserCredentials.mayDeleteElements()) {
             btnDelete.setVisible(false);
