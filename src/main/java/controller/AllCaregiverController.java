@@ -5,13 +5,11 @@ import datastorage.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Caregiver;
+import model.Treatment;
 import org.hsqldb.rights.User;
 import utils.UserCredentials;
 
@@ -32,6 +30,8 @@ public class AllCaregiverController {
     private TableColumn<Caregiver, String> colTelephone;
 
     @FXML
+    private Button btnLockUnlock;
+    @FXML
     Button btnDelete;
     @FXML
     Button btnAdd;
@@ -51,6 +51,18 @@ public class AllCaregiverController {
     public void initialize() {
         readAllAndShowInTableView();
 
+        tableView.setRowFactory(tv -> new TableRow<Caregiver>() {
+            @Override
+            public void updateItem(Caregiver item, boolean empty) {
+                super.updateItem(item, empty) ;
+                if (item==null||!item.isLocked()) {
+                    setStyle("");
+                } else {
+                    setStyle("-fx-background-color: #ec5757;");
+                }
+            }
+        });
+
         this.colID.setCellValueFactory(new PropertyValueFactory<Caregiver, Integer>("cid"));
 
         //CellValuefactory zum Anzeigen der Daten in der TableView
@@ -64,8 +76,14 @@ public class AllCaregiverController {
         this.colTelephone.setCellValueFactory(new PropertyValueFactory<Caregiver, String>("phonenumber"));
         this.colTelephone.setCellFactory(TextFieldTableCell.forTableColumn());
 
+
+
         //Anzeigen der Daten
         this.tableView.setItems(this.tableviewContent);
+
+        if (!UserCredentials.mayLockAndUnlock()) {
+            btnLockUnlock.setVisible(false);
+        }
 
         if (!UserCredentials.mayDeleteElements()) {
             btnDelete.setVisible(false);
@@ -160,6 +178,12 @@ public class AllCaregiverController {
     public void handleDeleteRow() {
         Caregiver selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         try {
+            List<Treatment> allTreatments = DAOFactory.getDAOFactory().createTreatmentDAO().readAll();
+            for(Treatment treatment: allTreatments) {
+                if (treatment.getCid() == selectedItem.getCid()) {
+                    return;
+                }
+            }
             dao.deleteById(selectedItem.getCid());
             this.tableView.getItems().remove(selectedItem);
         } catch (SQLException e) {
@@ -193,5 +217,20 @@ public class AllCaregiverController {
         this.txtFirstname.clear();
         this.txtSurname.clear();
         this.txtTelephone.clear();
+    }
+
+    public void handleLockUnlock() {
+        Caregiver c = tableView.getSelectionModel().getSelectedItem();
+        if (c == null) {
+            return;
+        }
+        if (UserCredentials.mayLockAndUnlock()) {
+            c.setLocked(!c.isLocked());
+        }
+        try {
+            dao.update(c);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

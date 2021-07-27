@@ -8,6 +8,7 @@ controller\LoginController.class
 utils\UserCredentials.class
 model\Caregiver.class
 datastorage\DAO.class
+controller\AllCaregiverController$1.class
 controller\TreatmentController$1.class
 datastorage\ConnectionBuilder.class
 utils\DateConverter.class
