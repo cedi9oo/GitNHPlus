@@ -102,7 +102,7 @@ public class Patient extends Person {
     }
 
     /**
-     *
+     * This is a setter method to set the roomnumber of the patient
      * @param roomnumber
      */
     public void setRoomnumber(String roomnumber) {
@@ -122,17 +122,24 @@ public class Patient extends Person {
         return false;
     }
 
-
+    /**
+     * This is a getter method to get the creation Date of the patient
+     * @return creation Date from the patient
+     */
     public String getCreationDate(){
         return creationDate.toString();
     }
 
+    /**
+     * This is a setter method to set the creation Date of the patient
+     * @param creationDate
+     */
     public void setCreationDate(String creationDate){
         this.creationDate = DateConverter.convertStringToLocalDate(creationDate);
     }
 
     /**
-     *
+     * string-representation of the patient
      * @return string-representation of the patient
      */
     public String toString() {

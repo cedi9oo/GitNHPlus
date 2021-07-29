@@ -17,16 +17,25 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+/**
+ * The <code>MainWindowController</code> contains the entire logic of the MainWindow view.
+ */
 public class MainWindowController {
 
     @FXML
     private BorderPane mainBorderPane;
 
-
+    /**
+     * initialize the automatic deletion.
+     */
     public void initialize() {
         checkPatientDataForDeletion();
     }
 
+    /**
+     * this method shows the window where all patients are visible
+     * @param e
+     */
     @FXML
     private void handleShowAllPatient(ActionEvent e) {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllPatientView.fxml"));
@@ -38,6 +47,10 @@ public class MainWindowController {
         AllPatientController controller = loader.getController();
     }
 
+    /**
+     * this method shows the window where all treatments are visible
+     * @param e
+     */
     @FXML
     private void handleShowAllTreatments(ActionEvent e) {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllTreatmentView.fxml"));
@@ -48,6 +61,11 @@ public class MainWindowController {
         }
         AllTreatmentController controller = loader.getController();
     }
+
+    /**
+     * this method shows the window where all caregivers are visible
+     * @param e
+     */
     @FXML
     private void handleShowAllCaregivers(ActionEvent e) {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllCaregiverView.fxml"));
@@ -59,6 +77,9 @@ public class MainWindowController {
         AllCaregiverController controller = loader.getController();
     }
 
+    /**
+     * methode for deletion after 10 year for treatments and patients
+     */
     private void checkPatientDataForDeletion() {
         try {
             TreatmentDAO treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
@@ -93,8 +114,6 @@ public class MainWindowController {
 
 
     }
-
-
 
 }
 

@@ -54,6 +54,12 @@ public class TreatmentController {
     private ObservableList<Caregiver> ComboBoxData =
             FXCollections.observableArrayList();
 
+    /**
+     * initialize the treatment window
+     * @param controller
+     * @param stage
+     * @param treatment
+     */
     public void initializeController(AllTreatmentController controller, Stage stage, Treatment treatment) {
         this.stage = stage;
         this.controller = controller;
@@ -90,6 +96,9 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * fill the caregiver combo box with data
+     */
     private void createCaregiverComboBoxData(){
         CaregiverDAO dao = DAOFactory.getDAOFactory().createCaregiverDAO();
         try {
@@ -102,6 +111,9 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * this methode show all data from a treatment
+     */
     private void showData() {
         this.lblPatientName.setText(patient.getSurname() + ", " + patient.getFirstName());
         this.lblCarelevel.setText(patient.getCareLevel());
@@ -113,6 +125,10 @@ public class TreatmentController {
         this.taRemarks.setText(this.treatment.getRemarks());
     }
 
+    /**
+     * This method is executed when the change button is clicked in the new treatment window,
+     * which updates the treatment.
+     */
     @FXML
     public void handleChange() {
         this.treatment.setDate(this.datepicker.getValue().toString());
@@ -126,6 +142,9 @@ public class TreatmentController {
         stage.close();
     }
 
+    /**
+     * this methode is linked with TreatmentDAO and updated the treatment
+     */
     private void doUpdate() {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
@@ -135,11 +154,19 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * This method is executed when the cancel button is clicked,
+     * which cancels the procedure.
+     */
     @FXML
     public void handleCancel() {
         stage.close();
     }
 
+    /**
+     * This method is executed when the Lock/unlock button is clicked,
+     * which lock or unlock a treatment.
+     */
     @FXML
     public void handleLockUnlock() {
         if (UserCredentials.mayLockAndUnlock()) {

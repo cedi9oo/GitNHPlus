@@ -2,6 +2,7 @@ package controller;
 
 import datastorage.CaregiverDAO;
 import datastorage.DAOFactory;
+import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +20,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The <code>NewTreatmentController</code> contains the entire logic of the NewTreatment window view.
+ */
 public class NewTreatmentController {
     @FXML
     private Label lblSurname;
@@ -43,6 +47,12 @@ public class NewTreatmentController {
 
     private ObservableList<Caregiver> ComboBoxData = FXCollections.observableArrayList();
 
+    /**
+     * initialize the new treatment window
+     * @param controller
+     * @param stage
+     * @param patient
+     */
     public void initialize(AllTreatmentController controller, Stage stage, Patient patient) {
         this.controller= controller;
         this.patient = patient;
@@ -66,7 +76,9 @@ public class NewTreatmentController {
         showPatientData();
     }
 
-
+    /**
+     * fill the caregiver combo box with data
+     */
     private void createCaregiverComboBoxData(){
         CaregiverDAO dao = DAOFactory.getDAOFactory().createCaregiverDAO();
         try {
@@ -79,11 +91,17 @@ public class NewTreatmentController {
         }
     }
 
+    /**
+     * this methode show patient data
+     */
     private void showPatientData(){
         this.lblFirstname.setText(patient.getFirstName());
         this.lblSurname.setText(patient.getSurname());
     }
 
+    /**
+     * handles a add-click-event. Creates a treatment and calls the create method in the {@link TreatmentDAO}
+     */
     @FXML
     public void handleAdd(){
         LocalDate date = this.datepicker.getValue();
@@ -100,6 +118,10 @@ public class NewTreatmentController {
         stage.close();
     }
 
+    /**
+     * this method is for creating a treatment
+     * @param treatment
+     */
     private void createTreatment(Treatment treatment) {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
@@ -109,6 +131,10 @@ public class NewTreatmentController {
         }
     }
 
+    /**
+     * This method is executed when the cancel button is clicked,
+     * which cancels the procedure.
+     */
     @FXML
     public void handleCancel(){
         stage.close();

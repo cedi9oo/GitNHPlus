@@ -16,7 +16,9 @@ import utils.UserCredentials;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-
+/**
+ * The <code>AllCaregiverController</code> contains the entire logic of the caregiver view. It determines which data is displayed and how to react to events.
+ */
 public class AllCaregiverController {
     @FXML
     private TableView<Caregiver> tableView;
@@ -219,6 +221,9 @@ public class AllCaregiverController {
         this.txtTelephone.clear();
     }
 
+    /**
+     * handles a add-click-event. Creates a lock or unlock for caregiver.
+     */
     public void handleLockUnlock() {
         Caregiver c = tableView.getSelectionModel().getSelectedItem();
         if (c == null) {

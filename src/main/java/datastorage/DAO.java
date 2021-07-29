@@ -3,7 +3,12 @@ package datastorage;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Methods provide generalized CRUD functionality
+ * @param <T>
+ */
 public interface DAO<T> {
+
     void create(T t) throws SQLException;
 
     T read(long key) throws SQLException;

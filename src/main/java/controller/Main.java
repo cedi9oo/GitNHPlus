@@ -14,17 +14,27 @@ import utils.UserCredentials;
 
 import java.io.IOException;
 
+/**
+ * Main class of the program
+ */
 public class Main extends Application {
 
     private Stage primaryStage;
 
     private static Main instance;
 
+    /**
+     * Getter methode for the instance
+     * @return the instance
+     */
     public static Main getMain(){
         return instance;
     }
 
-
+    /**
+     * start methode
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
         instance = this;
@@ -32,6 +42,9 @@ public class Main extends Application {
         login();
     }
 
+    /**
+     * this methode open the Login window of the application
+     */
     public void login() {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/LoginView.fxml"));
@@ -57,6 +70,10 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * this methode open the main window of the application
+     * @param loggedinUser
+     */
     public void mainWindow(final String loggedinUser) {
         try {
             UserCredentials.setUser(loggedinUser);
@@ -83,5 +100,9 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * main methode, entry point into the program
+     * @param args
+     */
     public static void main(String[] args) { launch(args);    }
 }

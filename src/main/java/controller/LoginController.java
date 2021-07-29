@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 
 
 /**
- * The <code>LoginController</code> contains the entire logic of the patient view. It determines which data is displayed and how to react to events.
+ * The <code>LoginController</code> contains the entire logic of the login view.
  */
 public class LoginController {
     @FXML
@@ -21,6 +21,10 @@ public class LoginController {
     @FXML
     private TextField password;
 
+    /**
+     * This method is executed when the login button is clicked,
+     * if successful you are redirected to the main window, otherwise an error occurs.
+     */
    @FXML
     public void handleLogin(){
        String benutzer = user.getText();
@@ -39,6 +43,10 @@ public class LoginController {
        }
    }
 
+    /**
+     * This method is executed when the cancel button is clicked,
+     * which cancels the procedure.
+     */
    @FXML
    public void handleCancel(){
        ConnectionBuilder.closeConnection();
@@ -46,7 +54,11 @@ public class LoginController {
        System.exit(0);
    }
 
-
+    /**
+     * The method is used to generate the hashed password SHA-512.
+     * @param passwordToHash
+     * @return generatedPassword for databank
+     */
     private String getHash(String passwordToHash) {
         String generatedPassword = null;
         try {

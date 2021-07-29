@@ -1,5 +1,6 @@
 package controller;
 
+import datastorage.CaregiverDAO;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
@@ -20,7 +21,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The <code>AllTreatmentController</code> contains the entire logic of the treatment view. It determines which data is displayed and how to react to events.
+ */
 public class AllTreatmentController {
     @FXML
     private TableView<Treatment> tableView;
@@ -53,6 +56,9 @@ public class AllTreatmentController {
     private ArrayList<Patient> patientList;
     private Main main;
 
+    /**
+     * Initializes the corresponding fields. Is called as soon as the corresponding FXML file is to be displayed.
+     */
     public void initialize() {
         readAllAndShowInTableView();
         createComboBoxData();
@@ -87,7 +93,10 @@ public class AllTreatmentController {
         }
     }
 
-
+    /**
+     * This methode add a treatment to the table view
+     * @param treatment
+     */
     private void addTreatmentToTableView(Treatment treatment){
         if (treatment.isLocked()){
             if (UserCredentials.maySeeLockedElements()){
@@ -100,7 +109,9 @@ public class AllTreatmentController {
     }
 
 
-
+    /**
+     * calls readAll in {@link TreatmentDAO} and shows patients in the table
+     */
     public void readAllAndShowInTableView() {
         comboBox.getSelectionModel().select(0);
         this.tableviewContent.clear();
@@ -116,6 +127,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * create a combo Box and fill it with data
+     */
     private void createComboBoxData(){
         PatientDAO dao = DAOFactory.getDAOFactory().createPatientDAO();
         try {
@@ -129,7 +143,9 @@ public class AllTreatmentController {
         }
     }
 
-
+    /**
+     * the method is executed when you select something else in the combobox, this the table is updated
+     */
     @FXML
     public void handleComboBox(){
         String p = this.comboBox.getSelectionModel().getSelectedItem();
@@ -159,6 +175,11 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * the method searches the list for surname
+     * @param surname
+     * @return the patient with this surname otherwise null
+     */
     private Patient searchInList(String surname){
         for (int i =0; i<this.patientList.size();i++){
             if(this.patientList.get(i).getSurname().equals(surname)){
@@ -168,6 +189,9 @@ public class AllTreatmentController {
         return null;
     }
 
+    /**
+     * this method is executed when you click on the delete button and delete a treatment
+     */
     @FXML
     public void handleDelete(){
         int index = this.tableView.getSelectionModel().getSelectedIndex();
@@ -180,6 +204,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * this method is executed when you click on the new treatment button and creates a new treatment
+     */
     @FXML
     public void handleNewTreatment() {
         try{
@@ -196,6 +223,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * checks if a double click was made on a treatment
+     */
     @FXML
     public void handleMouseClick(){
         tableView.setOnMouseClicked(event -> {
@@ -208,6 +238,10 @@ public class AllTreatmentController {
         });
     }
 
+    /**
+     * this method opens a new treatment window in the application
+     * @param patient
+     */
     public void newTreatmentWindow(Patient patient){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/NewTreatmentView.fxml"));
@@ -228,6 +262,10 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * this method opens a treatment window in the application
+     * @param treatment
+     */
     public void treatmentWindow(Treatment treatment){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/TreatmentView.fxml"));
